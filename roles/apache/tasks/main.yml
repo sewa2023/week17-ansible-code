@@ -1,0 +1,16 @@
+---
+# tasks file for apache
+  - name: Install Httpd
+    package:
+        name: "{{package_name}}"
+        state: present
+  - name: Start Httpd daemon
+    systemd:
+        name: "{{package_name}}"
+        state: started
+        enabled: true
+  - name: Copy index file to target
+    copy:
+        src: index.html
+        dest: /var/www/html/index.html
+    notify: Restart Apache     
